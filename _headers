@@ -1,2 +1,4 @@
 /*
   Content-Security-Policy: script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com;
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
