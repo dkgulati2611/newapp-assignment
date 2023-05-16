@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Typography, Box, Checkbox } from '@mui/material';
+import { Typography } from '@mui/material';
 import DepartmentCheckbox from './departmentcheckbox';
+
 const DEPARTMENTS = [
   {
     id: 1,
@@ -36,48 +37,56 @@ const DEPARTMENTS = [
   },
 ];
 
-
-
 const Department = () => {
-  const [selectedSubDepartments, setSelectedSubDepartments] = useState([]);
+  const [selectedSubDepartments, setSelectedSubDepartments] = useState<number[]>([]);
 
-  const handleDepartmentSelect = (departmentId, selected) => {
-    let updatedSubDepartments = [...selectedSubDepartments];
+  const handleDepartmentSelect = (departmentId: number, selected: boolean) => {
+    let updatedSubDepartments: number[] = [...selectedSubDepartments];
+
     if (selected) {
       const department = DEPARTMENTS.find((dep) => dep.id === departmentId);
-      updatedSubDepartments = [...selectedSubDepartments, department.id, ...department.subDepartments.map((subDep) => subDep.id)];
+      if (department) {
+        updatedSubDepartments = [
+          ...updatedSubDepartments,
+          department.id,
+          ...department.subDepartments.map((subDep) => subDep.id),
+        ];
+      }
     } else {
       const department = DEPARTMENTS.find((dep) => dep.id === departmentId);
-      updatedSubDepartments = updatedSubDepartments.filter(
-        (subDepId) => !department.subDepartments.map((subDep) => subDep.id).includes(subDepId)
-      );
+      if (department) {
+        updatedSubDepartments = updatedSubDepartments.filter(
+          (subDepId) => !department.subDepartments.map((subDep) => subDep.id).includes(subDepId)
+        );
+      }
     }
     setSelectedSubDepartments(updatedSubDepartments);
   };
 
-  const handleSubDepartmentSelect = (subDepartmentId, selected) => {
-    let updatedSubDepartments = [...selectedSubDepartments];
+  const handleSubDepartmentSelect = (subDepartmentId: number, selected: boolean) => {
+    let updatedSubDepartments: number[] = [...selectedSubDepartments];
     if (selected) {
       updatedSubDepartments.push(subDepartmentId);
     } else {
-      updatedSubDepartments= updatedSubDepartments.filter((subDepId) => subDepId !== subDepartmentId);
+      updatedSubDepartments = updatedSubDepartments.filter((subDepId) => subDepId !== subDepartmentId);
     }
     setSelectedSubDepartments(updatedSubDepartments);
-    };
-    
-    return (
+  };
+
+  return (
     <div>
-    <Typography variant="h4">Departments and Sub-Departments</Typography>
-    {DEPARTMENTS.map((department) => (
-    <DepartmentCheckbox
-           key={department.id}
-           department={department}
-           selectedSubDepartments={selectedSubDepartments}
-           onSelectDepartment={handleDepartmentSelect}
-           onSelectSubDepartment={handleSubDepartmentSelect}
-         />
-    ))}
+      <Typography variant="h4">Departments and Sub-Departments</Typography>
+      {DEPARTMENTS.map((department) => (
+        <DepartmentCheckbox
+          key={department.id}
+          department={department}
+          selectedSubDepartments={selectedSubDepartments}
+          onSelectDepartment={handleDepartmentSelect}
+          onSelectSubDepartment={handleSubDepartmentSelect}
+        />
+      ))}
     </div>
-    );
+  );
 };
+
 export default Department;

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
