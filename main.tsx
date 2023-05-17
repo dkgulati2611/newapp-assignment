@@ -2,8 +2,8 @@ import * as ReactDOM from 'react-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import App from './App';
-import SecondPage from './secondpage';
+import App from './src/App';
+import SecondPage from './src/secondpage';
 
 const theme = createTheme();
 
